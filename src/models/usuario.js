@@ -21,7 +21,7 @@ class Usuario extends Model {
             msg: 'O email deve ser informado.'
           },
           isEmail: {
-            msg: 'Email deve ser informado.'
+            msg: 'Email deve ser válido.'
           }
         }
       },
