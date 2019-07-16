@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
 
         req.body.token = await Usuario.verifyToken(req.headers['x-access-token'])
         req.body.usuarioId = parseInt(req.body.token.id)
-        req.body.user = await Usuario.get(req.body.usuarioId)
+        req.body.usuario = await Usuario.get(req.body.usuarioId)
 
         if (!Usuario) {
             return errorRes(res, 401, 'Usuário não encontrado.')
