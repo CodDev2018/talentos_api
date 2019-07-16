@@ -1,6 +1,8 @@
 'use strict';
 const Sequelize = require('sequelize')
 const Model = Sequelize.Model
+const Op = Sequelize.Op
+
 class Usuario extends Model {
   static init(sequelize, DataTypes) {
     return super.init({
@@ -43,7 +45,9 @@ class Usuario extends Model {
             msg: 'O perfil deve ser informado.'
           },
           isIn: {
-            args: ['ADMIN', 'CANDIDATO'],
+            args: [
+              ['ADMIN', 'CANDIDATO']
+            ],
             msg: 'São aceitos apenas perfis ADMIN e CANDIDATO.'
           }
         }
@@ -60,7 +64,7 @@ class Usuario extends Model {
 
   static async search(query, limit, offset) {
     let where = {}
-    if (query.nome) where.nome = query.nome
+    if (query.nome) where.nome = {[Op.like]: `%${query.nome}%`}
     if (query.email) where.email = query.email
     return await Usuario.findAndCountAll({
       where: where,
