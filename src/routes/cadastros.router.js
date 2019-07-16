@@ -4,7 +4,7 @@ var router = express.Router();
 const Models = require('../models')
 const errorRes = require('./responses/error.response')
 const CRUD = require('./controllers/crud.controller')
-const allowModels = ['Estado']
+const allowModels = ['Estado', 'Cidade', 'TelefoneTipo', 'EstadoCivil', 'FaixaSalarial', 'CursoNivel', 'CursoSituacao']
 
 const solveMethod = async (req, res, next, method) => {
   if (!allowModels.includes(req.params.model)) {
