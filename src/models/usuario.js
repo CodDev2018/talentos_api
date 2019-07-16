@@ -3,6 +3,11 @@ const Sequelize = require('sequelize')
 const Model = Sequelize.Model
 const Op = Sequelize.Op
 
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+const SECRET = 'DSFGSD453435sdgfhdfg%&¨*#¨$%#sdgfsd'
+
 class Usuario extends Model {
   static init(sequelize, DataTypes) {
     return super.init({
@@ -54,7 +59,13 @@ class Usuario extends Model {
       }
     }, {
       sequelize,
-      underscored: true
+      underscored: true,
+      hooks: {
+        beforeSave: (usuario, options) => {
+          usuario.senha = bcrypt.hashSync(usuario.senha, 10)
+          usuario.perfil = "CANDIDATO"
+        }
+      }
     })
   }
 
@@ -75,6 +86,41 @@ class Usuario extends Model {
 
   static async get(id) {
     return await Usuario.findByPk(id, {})
+  }
+
+  static async verifyToken(token) {
+    return await jwt.verify(token, SECRET)
+  }
+
+  static async verifyLogin(email, senha) {
+    try {
+      let usuario = await Usuario.findOne({
+        where: {
+          email: email
+        }
+      })
+
+      if (!usuario) {
+        throw new Error('Email não encontrado!')
+      }
+      
+      if (!bcrypt.compareSync(senha, usuario.senha)) {
+        throw new Error('Senha não confere!')
+      }
+
+      let token = jwt.sign({
+        id: usuario.id
+      }, SECRET, {
+        expiresIn: '1d'
+      })
+
+      return {
+        usuario: usuario.transform(),
+        token: token
+      }
+    } catch (error) {
+      throw error
+    }
   }
 
   transform() {
