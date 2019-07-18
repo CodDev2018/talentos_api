@@ -70,12 +70,14 @@ class Usuario extends Model {
   }
 
   static associate(models) {
-
+    this.hasOne(models.Pessoa)
   }
 
   static async search(query, limit, offset) {
     let where = {}
-    if (query.nome) where.nome = {[Op.like]: `%${query.nome}%`}
+    if (query.nome) where.nome = {
+      [Op.like]: `%${query.nome}%`
+    }
     if (query.email) where.email = query.email
     return await Usuario.findAndCountAll({
       where: where,
@@ -85,7 +87,9 @@ class Usuario extends Model {
   }
 
   static async get(id) {
-    return await Usuario.findByPk(id, {})
+    return await Usuario.findByPk(id, {
+      include: ['Pessoa']
+    })
   }
 
   static async verifyToken(token) {
@@ -103,7 +107,7 @@ class Usuario extends Model {
       if (!usuario) {
         throw new Error('Email não encontrado!')
       }
-      
+
       if (!bcrypt.compareSync(senha, usuario.senha)) {
         throw new Error('Senha não confere!')
       }
