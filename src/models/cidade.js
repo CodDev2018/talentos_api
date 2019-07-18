@@ -24,7 +24,7 @@ class Cidade extends Model {
           },
           async isInEstados(value) {
             try {
-              const estado = await require('./index').Estado.get(value)
+              const estado = await this.sequelize.models.Estado.get(value)
               if (!estado) {
                 throw new Error('Estado associado não pode ser encontrado');
               }
