@@ -93,6 +93,8 @@ class Pessoa extends Model {
     this.hasMany(models.PessoaTelefone, {
       as: 'Telefones'
     })
+
+    this.hasOne(models.Candidato)
   }
 
   static async search(query, limit, offset) {
@@ -127,6 +129,9 @@ class Pessoa extends Model {
           model: this.sequelize.models.PessoaTelefone,
           as: 'Telefones',
           include: ['TelefoneTipo']
+        },
+        {
+          model: this.sequelize.models.Candidato
         }
       ]
     })
@@ -143,7 +148,8 @@ class Pessoa extends Model {
         id: this.usuarioId
       },
       enderecos: this.Enderecos ? this.Enderecos.map(endereco => endereco.transform()) : [],
-      telefones: this.Telefones ? this.Telefones.map(telefone => telefone.transform()) : []
+      telefones: this.Telefones ? this.Telefones.map(telefone => telefone.transform()) : [],
+      candidato: this.Candidato ? this.Candidato.transform() : {},
     }
   }
 }

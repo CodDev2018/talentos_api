@@ -11,8 +11,13 @@ module.exports = async (req, res, next) => {
         req.body.usuarioId = parseInt(req.body.token.id)
         req.body.usuario = await Usuario.get(req.body.usuarioId)
 
-        if (!Usuario) {
+        if (!req.body.usuario) {
             return errorRes(res, 401, 'Usuário não encontrado.')
+        }
+
+        if (req.body.usuario.perfil !== 'ADMIN') {
+            req.body.pessoaId = req.body.usuario.Pessoa ? req.body.usuario.Pessoa.id : null
+            req.body.candidatoId = req.body.usuario.Pessoa.Candidato ? req.body.usuario.Pessoa.Candidato.id : null
         }
 
         next()

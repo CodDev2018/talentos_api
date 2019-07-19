@@ -57,7 +57,7 @@ class CRUDController {
         try {
             const entityOld = await this.model.get(req.params.id)
             const entityNew = await entityOld.update(req.body)
-            return successRes(res, 201, 'Successo ao atualizar entidade em usuários', entityNew.transform())
+            return successRes(res, 200, 'Successo ao atualizar entidade em usuários', entityNew.transform())
         } catch (error) {
             if (error.name && error.name.includes('Sequelize')) {
                 return invalidRes(res, 400, `Dados informados não são válidos para entidade ${this.model.getTableName()}`, error)
