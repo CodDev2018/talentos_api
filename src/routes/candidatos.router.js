@@ -7,11 +7,10 @@ const {
     CandidatoExperiencia
 } = require('../models')
 
+
+const candidatoController = require('./controllers/candidato.controller')
+
 const CrudController = require('./controllers/crud.controller')
-
-const candidatoController = new CrudController()
-candidatoController.setModel(Candidato)
-
 const cursoController = new CrudController()
 cursoController.setModel(CandidatoCurso)
 
@@ -21,6 +20,7 @@ experienciaController.setModel(CandidatoExperiencia)
 const verifyAccessTokenMiddleware = require('./middlewares/verifyAccessToken.middleware')
 const verifyAdminMiddleware = require('./middlewares/verifyAdmin.middleware')
 const verifyCandidatoMiddleware = require('./middlewares/verifyCandidato.middleware')
+const uploadModdleware = require('./middlewares/upload.middleware')
 
 const verifyAdmin = [verifyAccessTokenMiddleware, verifyAdminMiddleware]
 const verifyOwner = [verifyAccessTokenMiddleware, verifyCandidatoMiddleware]
@@ -31,7 +31,7 @@ const verifyOwner = [verifyAccessTokenMiddleware, verifyCandidatoMiddleware]
 router.get('/:id', verifyOwner, candidatoController.get.bind(candidatoController))
 router.get('/', verifyAdmin, candidatoController.find.bind(candidatoController))
 router.post('/', verifyAccessTokenMiddleware, candidatoController.create.bind(candidatoController));
-router.patch('/:id', verifyOwner, candidatoController.update.bind(candidatoController));
+router.patch('/:id', verifyOwner, uploadModdleware.single('foto'), candidatoController.update.bind(candidatoController));
 router.delete('/:id', verifyAdmin, candidatoController.delete.bind(candidatoController));
 
 /**

@@ -22,7 +22,6 @@ module.exports = async (req, res, next) => {
 
         next()
     } catch (error) {
-        console.log(error)
         return errorRes(res, 500, 'Não foi possivel validar o token de acesso.', error)
     }
 }

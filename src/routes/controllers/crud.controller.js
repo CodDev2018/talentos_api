@@ -44,7 +44,6 @@ class CRUDController {
             const entity = await this.model.create(req.body)
             return successRes(res, 201, `Nova entidade incluida com sucesso em ${this.model.getTableName()}.`, entity.transform())
         } catch (error) {
-            console.log(error)
             if (error.name && error.name.includes('SequelizeValidation')) {
                 return invalidRes(res, 400, `Dados informados não são válidos para entidade ${this.model.getTableName()}`, error)
             }
