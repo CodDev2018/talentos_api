@@ -153,7 +153,7 @@ class Candidato extends Model {
     return {
       id: this.id,
       descricaoPerfil: this.descricaoPerfil,
-      fotoUrl: this.fotoUrl,
+      foto: this.foto,
       tipoCnh: this.tipoCnh,
       pretencaoSalarial: this.pretencaoSalarial,
       faixaSalarial: this.FaixaSalarial ? this.FaixaSalarial.transform() : {
