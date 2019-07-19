@@ -15,7 +15,5 @@ module.exports = async (req, res, next) => {
         return errorRes(res, 401, 'Você não tem permissão para acessar esse recurso.')
     }
 
-    req.body.pessoaId = pessoaId
-
     next()
 }

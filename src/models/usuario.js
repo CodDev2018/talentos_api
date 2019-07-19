@@ -88,7 +88,13 @@ class Usuario extends Model {
 
   static async get(id) {
     return await Usuario.findByPk(id, {
-      include: ['Pessoa']
+      include: [{
+        model: this.sequelize.models.Pessoa,
+        as: 'Pessoa',
+        include: {
+          model: this.sequelize.models.Candidato,
+        }
+      }]
     })
   }
 
