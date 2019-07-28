@@ -17,11 +17,12 @@ module.exports = async (req, res, next) => {
 
         if (req.body.usuario.perfil !== 'ADMIN') {
             req.body.pessoaId = req.body.usuario.Pessoa ? req.body.usuario.Pessoa.id : null
-            req.body.candidatoId = req.body.usuario.Pessoa.Candidato ? req.body.usuario.Pessoa.Candidato.id : null
+            req.body.candidatoId = req.body.usuario.Pessoa && req.body.usuario.Pessoa.Candidato ? req.body.usuario.Pessoa.Candidato.id : null
         }
 
         next()
     } catch (error) {
+        console.error(error)
         return errorRes(res, 500, 'Não foi possivel validar o token de acesso.', error)
     }
 }
