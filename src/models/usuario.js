@@ -107,7 +107,14 @@ class Usuario extends Model {
       let usuario = await Usuario.findOne({
         where: {
           email: email
-        }
+        },
+        include: [{
+          model: this.sequelize.models.Pessoa,
+          as: 'Pessoa',
+          include: {
+            model: this.sequelize.models.Candidato,
+          }
+        }]
       })
 
       if (!usuario) {
@@ -138,7 +145,8 @@ class Usuario extends Model {
       id: this.id,
       nome: this.nome,
       email: this.email,
-      perfil: this.perfil
+      perfil: this.perfil,
+      pessoa: this.Pessoa ? this.Pessoa.transform() : null
     }
   }
 }

@@ -28,6 +28,7 @@ class Pessoa extends Model {
       tipo: {
         type: DataTypes.CHAR,
         allowNull: false,
+        default: 'F',
         validate: {
           notNull: {
             msg: 'O tipo deve ser informado.'
@@ -149,7 +150,7 @@ class Pessoa extends Model {
       },
       enderecos: this.Enderecos ? this.Enderecos.map(endereco => endereco.transform()) : [],
       telefones: this.Telefones ? this.Telefones.map(telefone => telefone.transform()) : [],
-      candidato: this.Candidato ? this.Candidato.transform() : {},
+      candidato: this.Candidato ? this.Candidato.transform() : null,
     }
   }
 }

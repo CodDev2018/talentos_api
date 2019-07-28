@@ -1,0 +1,13 @@
+{
+    "name": "Talentos API",
+    "version": "0.1.0",
+    "description": "Documentação da API CodDev Talentos",
+    "title": "CodDev Talentos API",
+    "url" : "http://localhost:3000",
+    "header": {
+        "title": "CodDev Talentos API"
+      },
+      "footer": {
+        "title": "CodDev"
+      }
+  }
