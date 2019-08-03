@@ -98,11 +98,8 @@ class PessoaTelefone extends Model {
   transform() {
     return {
       id: this.id,
-      logradouro: this.logradouro,
       numero: this.numero,
-      bairro: this.bairro,
-      complemento: this.complemento,
-      cep: this.cep,
+      obs: this.obs,
       tipo: this.TelefoneTipo ? this.TelefoneTipo.transform() : {
         id: this.TelefoneTipoId
       }
